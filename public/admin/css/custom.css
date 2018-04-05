@@ -1,0 +1,22 @@
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+	background-color: #605ca8;
+	border-color: #464386;
+}
+
+.btn-primary {
+	background-color: #605ca8;
+	border-color: #464386;
+}
+
+.btn-primary:hover {
+	background-color: #464386;
+}
+
+.box-body {
+	overflow-x: auto;
+}
+
+.skin-purple-light .sidebar-menu>li:hover>a, .skin-purple-light .sidebar-menu>li.active>a {
+	/*background-color: #dddbff;*/
+	border-left: 3px solid #605ca8;
+}
