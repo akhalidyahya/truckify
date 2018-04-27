@@ -16,12 +16,16 @@ class PengeluaranController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        $biaya = Storing::where('tanggal',Date('Y-m-d'))->sum('biaya');
-        $biaya_mekanik = Storing::where('tanggal',Date('Y-m-d'))->sum('biaya_mekanik');
-        $storing = $biaya + $biaya_mekanik;
-        return view('pages/pengeluaran',['storing'=>$storing]);
+        if($request->session()->has('login_status') != true) {
+          return redirect('login');
+        } else {
+          $biaya = Storing::where('tanggal',Date('Y-m-d'))->sum('biaya');
+          $biaya_mekanik = Storing::where('tanggal',Date('Y-m-d'))->sum('biaya_mekanik');
+          $storing = $biaya + $biaya_mekanik;
+          return view('pages/pengeluaran',['storing'=>$storing]);
+        }
     }
 
     /**

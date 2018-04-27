@@ -4,12 +4,12 @@
   <link rel="stylesheet" href="{{asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
 <section class="content-header">
 	<h1>
-		Data Kamadjaya
-		<small>Informasi mengenai project kamadjaya</small>
+    Project DataScript
+		<small>Informasi mengenai project DataScript</small>
 	</h1>
-	<ol class="breadcrumb">
-		<li><a href="#"><i class="fa fa-wrench"></i> Project </a></li>
-    <li>Kamadjaya</li>
+  <ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-wrench"></i> Project</a></li>
+    <li>DataScript</li>
 	</ol>
 </section>
 <section class="content">
@@ -31,26 +31,24 @@
         something went <strong>wrong!</strong>
       </div>
       <br>
-			<a href="#" class="btn btn-primary" onclick="tambahKamadjaya()"><i class="fa fa-plus"></i> Tambah Data</a>
+			<a id="myButton" href="#" class="btn btn-primary" onclick="tambahDatascript()"><i class="fa fa-plus"></i> Tambah Data</a>
 		</div>
 		<!-- /.box-header -->
 		<div class="box-body">
-			<table id="example2" class="table table-bordered table-striped">
+			<table id="table" class="table table-bordered table-striped">
 				<thead>
 					<tr>
-            <th>Tanggal</th>
-            <th>No Kendaraan</th>
-            <th>No DO</th>
-            <th>Tipe Kendaraan</th>
-            <th>customer</th>
-            <th>Destinasi</th>
-            <th>Wilayah</th>
+						<!-- <th>Id</th> -->
+						<th>tanggal</th>
+						<th>Tipe Truk</th>
+						<th>no Truk</th>
+						<th>no DO</th>
+            <th>no Barang</th>
+            <th>Customer</th>
             <th>Daerah</th>
-            <th>Qty</th>
-            <th>Total m3/DO</th>
-            <th>Desc</th>
+            <th>Biaya lain / bongkar</th>
             <th>Delivery Cost</th>
-            <th>Aksi</th>
+            <th>aksi</th>
 					</tr>
 				</thead>
 				<tbody></tbody>
@@ -59,55 +57,53 @@
 		<!-- /.box-body -->
 	</div>
 </section>
-@include('form/formkamadjaya')
+@include('form/formdatascript')
 <script src="{{asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <script>
-  var t = $('#example2').DataTable({
+  var t = $('#table').DataTable({
     'processing'  : true,
     'serverSide'  : true,
-    'ajax'        : "{{ route('api.kamadjaya') }}",
+    'ajax'        : "{{ route('api.datascript') }}",
     'dataType'    : 'json',
     'paging'      : true,
     'lengthChange': true,
     'columns'     : [
       {data:'tanggal', name: 'tanggal'},
+      {data:'jenis_kendaraan', name: 'jenis_kendaraan'},
       {data:'nopol', name: 'nopol'},
       {data:'no_do', name: 'no_do'},
-      {data:'jenis_kendaraan', name: 'jenis_kendaraan'},
-      {data:'customer', name: 'customer'},
-      {data:'destinasi', name: 'destinasi'},
-      {data:'wilayah', name: 'wilayah'},
-      {data:'daerah', name: 'daerah'},
-      {data:'qty', name: 'qty'},
-      {data:'total_do', name: 'total_do'},
-      {data:'desc', name: 'desc'},
-      {data:'cost', name: 'cost'},
-      {data:'aksi', name: 'aksi', orderable: false, searchable: false}
+      {data:'barang', name: 'barang'},
+      {data:'customer',name:'customer'},
+      {data:'daerah',name:'daerah'},
+      {data:'lain',name:'lain'},
+      {data:'cost',name:'cost'},
+      {data:'aksi', name: 'aksi', orderable: false, searchable: false},
     ],
     'info'        : true,
     'autoWidth'   : false
   });
 
-  function tambahKamadjaya(){
+  function tambahDatascript(){
     save_method = 'add';
     $('input[name=_method]').val('POST');
     $('#myModal').modal('show');
     $('#myModal form')[0].reset();
-    $('.modal-title').text('Tambah data Kamadjaya');
+    $('.modal-title').text('Tambah data DataScript');
   }
 
-  function editKamadjaya(id){
+  function editDatascript(id){
     save_method = 'edit';
     $('input[name=_method]').val('PATCH');
     $('#myModal form')[0].reset();
+
     $.ajax({
-      url: "{{url('kamadjaya')}}"+"/"+id+"/edit",
+      url: "{{url('datascript')}}"+"/"+id+"/edit",
       type: "GET",
       dataType: "JSON",
       success: function(data) {
         $('#myModal').modal('show');
-        $('.modal-title').text('Edit data kamadjaya');
+        $('.modal-title').text('Edit data Datascript');
 
         $('#id').val(data.id);
 
@@ -116,12 +112,9 @@
         $('#no_do').val(data.no_do);
         $('#jenis').val(data.tipe);
         $('#customer').val(data.customer);
-        $('#destinasi').val(data.destinasi);
-        $('#wilayah').val(data.wilayah);
+        $('#barang').val(data.barang);
+        $('#lain').val(data.lain);
         $('#daerah').val(data.daerah);
-        $('#jumlah').val(data.qty);
-        $('#m3do').val(data.total_do);
-        $('#desc').val(data.desc);
         $('#cost').val(data.cost);
       },
       error: function(){
@@ -130,12 +123,12 @@
     });
   }
 
-  function deleteKamadjaya(id) {
+  function deleteDatascript(id) {
     var popup = confirm("Apakah ingin hapus data?");
     var csrf_token = $('meta[name="csrf_token"]').attr('content');
     if(popup == true) {
       $.ajax({
-        url: "{{ url('kamadjaya') }}" + '/' + id,
+        url: "{{ url('datascript') }}" + '/' + id,
         type: "POST",
         data: {'_method': 'DELETE','_token': csrf_token},
         success: function(data) {
@@ -151,8 +144,8 @@
   $('#submit').click(function(e){
     e.preventDefault();
     var id = $('#id').val();
-    if(save_method == 'add') url = "{{url('kamadjaya')}}";
-    else url = "{{url('kamadjaya').'/'}}" + id;
+    if(save_method == 'add') url = "{{url('datascript')}}";
+    else url = "{{url('datascript').'/'}}" + id;
 
     $.ajax({
       url:url,
@@ -172,5 +165,4 @@
     });
   });
 </script>
-
 @endsection

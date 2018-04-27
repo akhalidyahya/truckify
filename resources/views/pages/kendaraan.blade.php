@@ -31,6 +31,7 @@
       </div>
       <br>
 			<a href="#" class="btn btn-primary" onclick="tambahKendaraan()"><i class="fa fa-plus"></i> Tambah Data</a>
+        <a href="{{route('kendaraan.export')}}" class="btn btn-info"><i class="fa fa-download"></i> Export</a>
 		</div>
 		<!-- /.box-header -->
 		<div class="box-body">

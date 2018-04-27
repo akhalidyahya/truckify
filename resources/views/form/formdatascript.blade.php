@@ -9,7 +9,7 @@
           <h4 class="modal-title"></h4>
         </div>
         <div class="modal-body">
-          <form id="form-kamadjaya" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
+          <form id="form-datascript" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
             {{csrf_field()}} {{method_field('POST')}}
             <input type="hidden" name="id" id="id">
             <div class="form-group">
@@ -21,6 +21,17 @@
                   </div>
                   <input name="tanggal" type="text" class="form-control pull-right" id="datepicker">
                 </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3" for="jenis">Tipe Truk</label>
+              <div class="col-sm-9">
+                <select class="form-control" name="jenis" id="jenis">
+                  <option value="">--pilih kendaraan--</option>
+                  @foreach($jenis as $data)
+                  <option value="{{$data->id}}">{{$data->jenis_kendaraan}}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
             <div class="form-group">
@@ -41,14 +52,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-sm-3" for="jenis">Tipe Truk</label>
+              <label class="control-label col-sm-3" for="barang">no Barang</label>
               <div class="col-sm-9">
-                <select class="form-control" name="jenis" id="jenis">
-                  <option value="">--pilih kendaraan--</option>
-                  @foreach($jenis as $data)
-                  <option value="{{$data->id}}">{{$data->jenis_kendaraan}}</option>
-                  @endforeach
-                </select>
+                <input type="text" class="form-control" name="barang" id="barang" placeholder="Masukan nomor barang">
               </div>
             </div>
             <div class="form-group">
@@ -58,39 +64,15 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-sm-3" for="destinasi">Destinasi</label>
-              <div class="col-sm-9">
-                <textarea name="destinasi" id="destinasi" rows="3" cols="30" class="form-control"></textarea>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-3" for="wilayah">wilayah</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" name="wilayah" id="wilayah" placeholder="Masukan wilayah">
-              </div>
-            </div>
-            <div class="form-group">
               <label class="control-label col-sm-3" for="daerah">daerah</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control" name="daerah" id="daerah" placeholder="Masukan daerah">
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-sm-3" for="jumlah">jumlah</label>
+              <label class="control-label col-sm-3" for="lain">Biaya Lain</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" name="jumlah" id="jumlah" placeholder="Masukan jumlah">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-3" for="m3do">total m3/DO</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" name="m3do" id="m3do" placeholder="Masukan total m3/do">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-3" for="desc">Deskripsi</label>
-              <div class="col-sm-9">
-                <textarea name="desc" id="desc" rows="3" cols="30" class="form-control"></textarea>
+                <input type="text" class="form-control" name="lain" id="lain" placeholder="Masukan biaya lain">
               </div>
             </div>
             <div class="form-group">

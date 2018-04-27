@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
-use App\Kamadjaya;
+use App\Sogood;
 use App\Kendaraan;
 use App\JenisKendaraan;
 
-class KamadjayaController extends Controller
+class SogoodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class KamadjayaController extends Controller
         } else {
           $kendaraan = Kendaraan::all();
           $jenis = JenisKendaraan::all();
-          return view('pages/kamadjaya',['kendaraan'=>$kendaraan,'jenis'=>$jenis]);
+          return view('pages/sogood',['kendaraan'=>$kendaraan,'jenis'=>$jenis]);
         }
     }
 
@@ -52,15 +52,12 @@ class KamadjayaController extends Controller
           'no_do' => $request['no_do'],
           'tipe' => $request['jenis'],
           'customer' => $request['customer'],
-          'destinasi' => $request['destinasi'],
-          'wilayah' => $request['wilayah'],
+          'barang' => $request['barang'],
           'daerah' => $request['daerah'],
-          'qty' => $request['jumlah'],
-          'total_do' => $request['m3do'],
-          'desc' => $request['desc'],
+          'lain' => $request['lain'],
           'cost' => $request['cost']
         ];
-        return Kamadjaya::create($data);
+        return Sogood::create($data);
     }
 
     /**
@@ -82,7 +79,7 @@ class KamadjayaController extends Controller
      */
     public function edit($id)
     {
-      return $kamadjaya = Kamadjaya::find($id);
+        return $sogood = Sogood::find($id);
     }
 
     /**
@@ -94,22 +91,19 @@ class KamadjayaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $kamadjaya = Kamadjaya::find($id);
+        $sogood = Sogood::find($id);
 
-        $kamadjaya->tanggal = $request['tanggal'];
-        $kamadjaya->no_truck = $request['kendaraan'];
-        $kamadjaya->no_do = $request['no_do'];
-        $kamadjaya->tipe = $request['jenis'];
-        $kamadjaya->customer = $request['customer'];
-        $kamadjaya->destinasi = $request['destinasi'];
-        $kamadjaya->wilayah = $request['wilayah'];
-        $kamadjaya->daerah = $request['daerah'];
-        $kamadjaya->qty = $request['jumlah'];
-        $kamadjaya->total_do = $request['m3do'];
-        $kamadjaya->desc = $request['desc'];
-        $kamadjaya->cost = $request['cost'];
+        $sogood->tanggal = $request['tanggal'];
+        $sogood->no_truck = $request['kendaraan'];
+        $sogood->no_do = $request['no_do'];
+        $sogood->tipe = $request['jenis'];
+        $sogood->customer = $request['customer'];
+        $sogood->barang = $request['barang'];
+        $sogood->lain = $request['lain'];
+        $sogood->daerah = $request['daerah'];
+        $sogood->cost = $request['cost'];
 
-        $kamadjaya->update();
+        $sogood->update();
     }
 
     /**
@@ -120,20 +114,19 @@ class KamadjayaController extends Controller
      */
     public function destroy($id)
     {
-        Kamadjaya::destroy($id);
+        Sogood::destroy($id);
     }
 
-    public function apikamadjaya(){
-      // $Kamadjaya = Kamadjaya::all();
-      $Kamadjaya = DB::table('kamadjayas')
-                ->leftjoin('kendaraans','kamadjayas.no_truck','=','kendaraans.id')
-                ->leftjoin('jenis_kendaraans','kamadjayas.tipe','=','jenis_kendaraans.id')
-                ->select('kamadjayas.*','kendaraans.nopol','jenis_kendaraans.jenis_kendaraan')
+    public function apisogood(){
+      $sogood = DB::table('sogoods')
+                ->leftjoin('kendaraans','sogoods.no_truck','=','kendaraans.id')
+                ->leftjoin('jenis_kendaraans','sogoods.tipe','=','jenis_kendaraans.id')
+                ->select('sogoods.*','kendaraans.nopol','jenis_kendaraans.jenis_kendaraan')
                 ->get();
-      return DataTables::of($Kamadjaya)
-        ->addColumn('aksi',function($Kamadjaya) {
-          return '<a onclick="editKamadjaya('.$Kamadjaya->id.')" class="btn btn-info btn-xs">Edit</a>'.' '.
-          '<a onclick="deleteKamadjaya('.$Kamadjaya->id.')"class="btn btn-danger btn-xs">Delete</a>';
+      return DataTables::of($sogood)
+        ->addColumn('aksi',function($sogood) {
+          return '<a onclick="editSogood('.$sogood->id.')" class="btn btn-info btn-xs">Edit</a>'.' '.
+          '<a onclick="deleteSogood('.$sogood->id.')"class="btn btn-danger btn-xs">Delete</a>';
         })->escapeColumns([])->make(true);
     }
 }

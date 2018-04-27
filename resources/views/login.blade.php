@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="{{asset('admin/css/AdminLTE.min.css')}}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{asset('admin/plugins/iCheck/square/blue.css')}}">
+  <!-- Custom css -->
+  <link rel="stylesheet" href="{{asset('admin/css/custom.css')}}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,19 +38,27 @@
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
-
-    <form action="" method="post">
+    @if(Session::has('status'))
+    <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ Session::get('status') }}
+    </div>
+    @endif
+    <form action="{{url('validate')}}" method="post">
+      {{csrf_field()}}
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Username">
+        <input type="text" class="form-control" placeholder="Username" name="username">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" placeholder="Password" name="password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
         <div class="col-xs-12"  style="text-align: center;">
-          <button type="submit" class="btn btn-primary btn-flat">Sign In</button>
+          <button type="submit" class="btn btn-primary purple">Sign In</button>
         </div>
         <!-- /.col -->
       </div>

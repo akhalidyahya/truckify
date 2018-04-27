@@ -17,11 +17,15 @@ class StoringController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        $kendaraan = Kendaraan::all();
-        $mekanik = Mekanik::all();
-        return view('pages/storing',['kendaraan'=>$kendaraan,'mekanik'=>$mekanik]);
+        if($request->session()->has('login_status') != true) {
+          return redirect('login');
+        } else {
+          $kendaraan = Kendaraan::all();
+          $mekanik = Mekanik::all();
+          return view('pages/storing',['kendaraan'=>$kendaraan,'mekanik'=>$mekanik]);
+        }
     }
 
     /**

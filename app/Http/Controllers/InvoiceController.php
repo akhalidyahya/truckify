@@ -15,9 +15,13 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        return view('pages/invoice');
+        if($request->session()->has('login_status') != true) {
+          return redirect('login');
+        } else {
+          return view('pages/invoice');
+        }
     }
 
     /**
@@ -111,7 +115,7 @@ class InvoiceController extends Controller
 
       return DataTables::of($invoice)
         ->addColumn('aksi',function($invoice) {
-          return //'<a onclick="editInvoice('.$invoice->id.')" class="btn btn-info btn-xs">Edit</a>'.' '.
+          return '<a onclick="editInvoice('.$invoice->id.')" class="btn btn-info btn-xs">Edit</a>'.' '.
           '<a onclick="deleteInvoice('.$invoice->id.')"class="btn btn-danger btn-xs">Delete</a>';
         })->escapeColumns([])->make(true);
     }

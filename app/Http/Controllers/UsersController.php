@@ -15,9 +15,13 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        return view('pages/users');
+        if($request->session()->has('login_status') != true) {
+          return redirect('login');
+        } else {
+         return view('pages/users');
+        }
     }
 
     /**

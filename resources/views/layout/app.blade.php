@@ -106,7 +106,7 @@
     <!-- Sidebar user panel -->
     <div class="user-panel" style="min-height: 60px">
       <div class="info">
-        <p>Alexander Pierce</p>
+        <p>{{Session::get('nama')}}</p>
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>
     </div>
@@ -151,6 +151,7 @@
           <i class="fa fa-file-o"></i> <span>Invoice</span>
         </a>
       </li>
+      @if(Session::get('role') == 'admin')
       <li class="treeview {{ (\Request::route()->getName() == 'users' || \Request::route()->getName() == 'jenis') ? 'active' : ''}}">
         <a href="#">
           <i class="fa fa-gear"></i> <span>Pengaturan</span>
@@ -164,8 +165,9 @@
           <li><a href="#"><i class="fa fa-circle-o"></i> Others</a></li>
         </ul>
       </li>
+      @endif
       <li>
-        <a onclick="return confirm('Anda ingin logout?')" href="#">
+        <a onclick="return confirm('Anda ingin logout?')" href="{{url('logout')}}">
           <i class="fa fa-power-off"></i> <span>Logout</span>
         </a>
       </li>

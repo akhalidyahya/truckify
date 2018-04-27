@@ -10,22 +10,18 @@ use App\JenisKendaraan;
 
 class JenishargaController extends Controller
 {
-    private $login = true;
-    public function __construct()
-    {
-
-    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        if ($this->login != true) {
-            return redirect('login');
-        } else
-        return view('pages/jenisharga');
+        if($request->session()->has('login_status') != true) {
+          return redirect('login');
+        } else {
+          return view('pages/jenisharga');
+        }
     }
 
     /**

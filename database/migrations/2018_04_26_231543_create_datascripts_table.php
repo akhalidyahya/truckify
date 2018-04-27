@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKamadjayasTable extends Migration
+class CreateDatascriptsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,32 +13,25 @@ class CreateKamadjayasTable extends Migration
      */
     public function up()
     {
-        Schema::create('kamadjayas', function (Blueprint $table) {
+        Schema::create('datascripts', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('tanggal')->nullable();
+            $table->integer('tipe')->unsigned();
             $table->integer('no_truck')->unsigned();
             $table->string('no_do',50)->nullable();
-            $table->integer('tipe')->unsigned();
+            $table->string('barang',50)->nullable();
             $table->string('customer',50)->nullable();
-            $table->string('destinasi',100)->nullable();
-            $table->string('wilayah',20)->nullable();
-            $table->integer('daerah')->unsigned();
-            $table->string('qty')->nullable();
-            $table->string('total_do',20)->nullable();
-            $table->string('desc',500)->nullable();
-            $table->string('cost',20)->nullable();
+            $table->string('daerah',50)->nullable();
+            $table->string('lain',50)->nullable();
+            $table->string('cost',50)->nullable();
             $table->timestamps();
         });
 
-        Schema::table('kamadjayas', function (Blueprint $table) {
+        Schema::table('datascripts', function (Blueprint $table) {
             $table->foreign('no_truck')
             ->references('id')->on('kendaraans')
             ->onDelete('cascade');
             $table->foreign('tipe')
             ->references('id')->on('jenis_kendaraans')
-            ->onDelete('cascade');
-            $table->foreign('daerah')
-            ->references('id')->on('kendaraans')
             ->onDelete('cascade');
         });
     }
@@ -50,6 +43,6 @@ class CreateKamadjayasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kamadjayas');
+        Schema::dropIfExists('datascripts');
     }
 }

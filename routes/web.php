@@ -11,13 +11,15 @@
 |
 */
 
-Route::get('dashboard', function () {
-    return view('pages/dashboard');
-})->name('dashboard');
-
-Route::get('login', function () {
-    return view('login');
+Route::get('/',function(){
+    return redirect('login');
 });
+
+Route::get('login', 'LoginController@index')->name('login');
+Route::post('validate', 'LoginController@login')->name('validate');
+Route::get('logout', 'LoginController@logout')->name('logout');
+
+Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
 Route::resource('kendaraan','KendaraanController', ['names' => [
     'index' => 'kendaraan'
@@ -43,6 +45,12 @@ Route::resource('invoice','InvoiceController',['names' => [
 ]);
 Route::get('api/invoice','InvoiceController@apiinvoice')->name('api.invoice');
 
+Route::resource('kamadjaya','KamadjayaController', ['names' => [
+    'index' => 'kamadjaya'
+  ]
+]);
+Route::get('api/kamadjaya','KamadjayaController@apikamadjaya')->name('api.kamadjaya');
+
 Route::resource('users','UsersController',['names' => [
     'index' => 'users',
     'save' => 'save'
@@ -67,8 +75,17 @@ Route::patch('harga/improve/{harga}','JenishargaController@improve')->name('harg
 Route::get('api/jenis','JenishargaController@apijenis')->name('api.jenis');
 Route::get('api/harga','JenishargaController@apiharga')->name('api.harga');
 
-Route::resource('kamadjaya','KamadjayaController', ['names' => [
-    'index' => 'kamadjaya'
+Route::resource('datascript','DataScriptConttroller',['names' => [
+    'index' => 'datascript'
   ]
 ]);
-Route::get('api/kamadjaya','KamadjayaController@apikamadjaya')->name('api.kamadjaya');
+Route::get('api/datascript','DataScriptConttroller@apidatascript')->name('api.datascript');
+
+Route::resource('sogood','SogoodController',['names' => [
+    'index' => 'sogood'
+  ]
+]);
+Route::get('api/sogood','SogoodController@apisogood')->name('api.sogood');
+
+// Export or Import Excel
+Route::get('kendaraan-export','KendaraanController@export')->name('kendaraan.export');

@@ -11,4 +11,8 @@ class Kendaraan extends Model
     public function storings() {
       return $this->hasMany(Storing::class);
     }
+
+    public function kamadjayas() {
+      return $this->hasMany(Kamadjaya::class);
+    }
 }

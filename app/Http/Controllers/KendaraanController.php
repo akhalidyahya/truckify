@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Excel;
 
 use App\Kendaraan;
 
@@ -14,9 +15,13 @@ class KendaraanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
+      if($request->session()->has('login_status') != true) {
+        return redirect('login');
+      } else {
         return view('pages/kendaraan');
+      }
     }
 
     /**
@@ -138,5 +143,14 @@ class KendaraanController extends Controller
           return '<a onclick="editKendaraan('.$kendaraan->id.')" class="btn btn-info btn-xs">Edit</a>'.' '.
           '<a onclick="deleteKendaraan('.$kendaraan->id.')"class="btn btn-danger btn-xs">Delete</a>';
         })->escapeColumns([])->make(true);
+    }
+
+    public function export(){
+        $kendaraan = Kendaraan::select('nopol','stnk','tahun','merk','daerah','foto','kir','sipa','ibm','kiu')->get();
+        return Excel::download('Data Kendaraan',function($excel) use ($kendaraan) {
+          $excel->sheet('mySheet',function($sheet)use($kendaraan){
+            $sheet->fromArray($kendaraan);
+          });
+        })->download('xls');
     }
 }

@@ -98,6 +98,8 @@
           $('#myModal').modal('show');
           $('.modal-title').text('Edit data invoice');
 
+          $('#id').val(data.id);
+
           $('#no').val(data.no);
           $('#nominal').val(data.nominal);
           $('#tgl_tempo').val(data.tgl_tempo);

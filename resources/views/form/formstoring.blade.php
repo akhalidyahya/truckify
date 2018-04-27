@@ -9,7 +9,7 @@
           <h4 class="modal-title"></h4>
         </div>
         <div class="modal-body">
-          <form id="form-kendaraan" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
+          <form id="form-storing" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
             {{csrf_field()}} {{method_field('POST')}}
             <input type="hidden" name="id" id="id">
             <div class="form-group">

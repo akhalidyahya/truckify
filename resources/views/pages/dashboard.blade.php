@@ -18,11 +18,11 @@
       <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+            <span class="info-box-icon bg-red"><i class="ion ion-social-usd"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">CPU Traffic</span>
-              <span class="info-box-number">90<small>%</small></span>
+              <span class="info-box-text">Pengeluaran <b>Hari</b> <br/>Ini</span>
+              <span class="info-box-number">Rp. {{$pengeluaranToday}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -31,11 +31,11 @@
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+            <span class="info-box-icon bg-red"><i class="ion ion-social-usd"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Likes</span>
-              <span class="info-box-number">41,410</span>
+              <span class="info-box-text">Pengeluaran <b>Bulan</b> <br/>Ini</span>
+              <span class="info-box-number">Rp. {{$pengeluaranMonth}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -48,11 +48,11 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+            <span class="info-box-icon bg-green"><i class="icon ion-android-car"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Sales</span>
-              <span class="info-box-number">760</span>
+              <span class="info-box-text">Jumlah Kendaraan</span>
+              <span class="info-box-number">{{$kendaraan}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -61,11 +61,72 @@
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+            <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">New Members</span>
-              <span class="info-box-number">2,000</span>
+              <span class="info-box-text">Jumlah user</span>
+              <span class="info-box-number">{{$user}}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-briefcase"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Delivery Cost <br>Kamadjaya <b>Bulan</b> Ini</span>
+              <span class="info-box-number">Rp. {{$kamadjaya}}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-briefcase"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Delivery Cost <br>Datascript <b>Bulan</b> Ini</span>
+              <span class="info-box-number">Rp. {{$datascript}}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="icon ion-briefcase"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Delivery Cost <br>So Good <b>Bulan</b> Ini</span>
+              <span class="info-box-number">Rp. {{$sogood}}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Jumlah ...</span>
+              <span class="info-box-number">0</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -80,8 +141,8 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Title</h3>
+            <div class="box-header with-border bg-aqua">
+              <h3 class="box-title">Storing</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -90,11 +151,34 @@
               </div>
             </div>
             <div class="box-body">
-              Start creating your amazing application!
+              <ul class="nav nav-stacked">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>no</th>
+                      <th>Tanggal</th>
+                      <th>Kendaraan</th>
+                      <th>Jenis Storing</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $no = 1; ?>
+                    @foreach($storing as $data)
+                    <tr>
+                      <td>{{$no}}</td>
+                      <td>{{$data->tanggal}}</td>
+                      <td>{{$data->nopol}}</td>
+                      <td>{{$data->jenis}}</td>
+                    </tr>
+                    <?php $no++; ?>
+                    @endforeach
+                  </tbody>
+                </table>
+              </ul>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-              Footer
+              <a href="{{url('storing')}}">Lihat Selengkapnya</a>
             </div>
             <!-- /.box-footer-->
           </div>
