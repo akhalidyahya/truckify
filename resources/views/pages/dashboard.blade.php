@@ -16,12 +16,12 @@
 
       <!-- Info boxes -->
       <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="ion ion-social-usd"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Pengeluaran <b>Hari</b> <br/>Ini</span>
+              <span class="info-box-text">Pengeluaran <b>Hari</b> Ini</span>
               <span class="info-box-number">Rp. {{$pengeluaranToday}}</span>
             </div>
             <!-- /.info-box-content -->
@@ -29,12 +29,12 @@
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="ion ion-social-usd"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Pengeluaran <b>Bulan</b> <br/>Ini</span>
+              <span class="info-box-text">Pengeluaran <b>Bulan</b> Ini</span>
               <span class="info-box-number">Rp. {{$pengeluaranMonth}}</span>
             </div>
             <!-- /.info-box-content -->
@@ -46,9 +46,9 @@
         <!-- fix for small devices only -->
         <div class="clearfix visible-sm-block"></div>
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="icon ion-android-car"></i></span>
+            <span class="info-box-icon bg-aqua"><i class="icon ion-android-car"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Jumlah Kendaraan</span>
@@ -59,25 +59,13 @@
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
 
-            <div class="info-box-content">
-              <span class="info-box-text">Jumlah user</span>
-              <span class="info-box-number">{{$user}}</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
       </div>
       <!-- /.row -->
 
       <!-- Info boxes -->
       <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="ion ion-briefcase"></i></span>
 
@@ -90,7 +78,7 @@
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="ion ion-briefcase"></i></span>
 
@@ -107,7 +95,7 @@
         <!-- fix for small devices only -->
         <div class="clearfix visible-sm-block"></div>
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="icon ion-briefcase"></i></span>
 
@@ -120,19 +108,7 @@
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
 
-            <div class="info-box-content">
-              <span class="info-box-text">Jumlah ...</span>
-              <span class="info-box-number">0</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
       </div>
       <!-- /.row -->
 
@@ -141,7 +117,7 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="box">
-            <div class="box-header with-border bg-aqua">
+            <div class="box-header with-border bg-black">
               <h3 class="box-title">Storing</h3>
 
               <div class="box-tools pull-right">

@@ -23,6 +23,14 @@
         Your action was <strong>Successful</strong>
       </div>
       <!-- alert error -->
+      @if(Session::has('status'))
+      <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{ Session::get('status') }}
+      </div>
+      @endif
       <div id="error" class="alert alert-danger hide" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -30,8 +38,17 @@
         something went <strong>wrong!</strong>
       </div>
       <br>
-			<a href="#" class="btn btn-primary" onclick="tambahInvoice()"><i class="fa fa-plus"></i> Tambah Data</a>
-		</div>
+
+      <a href="#" class="btn btn-primary" onclick="tambahInvoice()"><i class="fa fa-plus"></i> Tambah Data</a>
+
+      <!-- Expot/Import Button -->
+      <div class="pull-right">
+        <a id="import-btn" href="#" class="btn btn-info"><i class="fa fa-upload"></i> Import</a>
+        <a href="{{route('invoice.export')}}" class=" btn btn-info" style=""><i class="fa fa-download"></i> Export</a>
+      </div>
+      <!-- END Export/Import Button -->
+
+    </div>
 		<!-- /.box-header -->
 		<div class="box-body">
 			<table id="example2" class="table table-bordered table-striped">
@@ -54,9 +71,14 @@
 	</div>
 </section>
 @include('form/forminvoice')
+@include('form/importinvoice')
 <script src="{{asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <script>
+  $('#import-btn').click(function(){
+      $('#import-form').modal('show');
+      $('.modal-title').text('Import File From Excel');
+  });
     var t = $('#example2').DataTable({
       'processing'  : true,
       'serverSide'  : true,

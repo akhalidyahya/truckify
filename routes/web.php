@@ -21,8 +21,28 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 
 Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
+// Export or Import Excel
+Route::get('kendaraan/export','KendaraanController@export')->name('kendaraan.export');
+Route::post('kendaraan/import','KendaraanController@import')->name('kendaraan.import');
+Route::get('storing/export','StoringController@export')->name('storing.export');
+Route::post('storing/import','StoringController@import')->name('storing.import');
+Route::get('pengeluaran/export','PengeluaranController@export')->name('pengeluaran.export');
+Route::post('pengeluaran/import','PengeluaranController@import')->name('pengeluaran.import');
+Route::get('invoice/export','InvoiceController@export')->name('invoice.export');
+Route::post('invoice/import','InvoiceController@import')->name('invoice.import');
+Route::get('kamadjaya/export','KamadjayaController@export')->name('kamadjaya.export');
+Route::post('kamadjaya/import','KamadjayaController@import')->name('kamadjaya.import');
+Route::get('datascript/export','DataScriptConttroller@export')->name('datascript.export');
+Route::post('datascript/import','DataScriptConttroller@import')->name('datascript.import');
+Route::get('sogood/export','SogoodController@export')->name('sogood.export');
+Route::post('sogood/import','SogoodController@import')->name('sogood.import');
+
+//Chart
+Route::get('pengeluaran/chart','PengeluaranController@chart')->name('pengeluaran.chart');
+
 Route::resource('kendaraan','KendaraanController', ['names' => [
-    'index' => 'kendaraan'
+    'index' => 'kendaraan',
+    'import' =>'import'
   ]
 ]);
 Route::get('api/kendaraan','KendaraanController@apikendaraan')->name('api.kendaraan');
@@ -86,6 +106,3 @@ Route::resource('sogood','SogoodController',['names' => [
   ]
 ]);
 Route::get('api/sogood','SogoodController@apisogood')->name('api.sogood');
-
-// Export or Import Excel
-Route::get('kendaraan-export','KendaraanController@export')->name('kendaraan.export');

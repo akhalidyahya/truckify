@@ -161,7 +161,7 @@
         </a>
         <ul class="treeview-menu">
           <li class="{{ (\Request::route()->getName() == 'users') ? 'active' : ''}}"><a href="{{url('users')}}"><i class="fa fa-circle-o"></i> Users dan Mekanik</a></li>
-          <li class="{{ (\Request::route()->getName() == 'jenis') ? 'active' : ''}}"><a href="{{url('jenis')}}"><i class="fa fa-circle-o"></i> Jenis kendaraan dan Harga</a></li>
+          <li class="{{ (\Request::route()->getName() == 'jenis') ? 'active' : ''}}"><a href="{{url('jenis')}}"><i class="fa fa-circle-o"></i> Jenis kendaraan & Harga</a></li>
           <li><a href="#"><i class="fa fa-circle-o"></i> Others</a></li>
         </ul>
       </li>

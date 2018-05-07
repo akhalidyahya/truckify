@@ -32,7 +32,15 @@
       </div>
       <br>
 			<a id="myButton" href="#" class="btn btn-primary" onclick="tambahDatascript()"><i class="fa fa-plus"></i> Tambah Data</a>
-		</div>
+
+      <!-- Expot/Import Button -->
+      <div class="pull-right">
+        <a id="import-btn" href="#" class="btn btn-danger" disabled><i class="fa fa-upload"></i> Import</a>
+        <a href="{{route('datascript.export')}}" class=" btn btn-info" style=""><i class="fa fa-download"></i> Export</a>
+      </div>
+      <!-- END Export/Import Button -->
+
+    </div>
 		<!-- /.box-header -->
 		<div class="box-body">
 			<table id="table" class="table table-bordered table-striped">

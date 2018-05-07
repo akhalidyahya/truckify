@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Excel;
 
 use App\Storing;
 use App\Kendaraan;
@@ -147,19 +148,63 @@ class StoringController extends Controller
           if($storing->foto == NULL){
             return "no photo";
           } else {
-            return ' <img width="50px" src="'.asset('upload/storing/'.$storing->foto).'"> ';
+            return ' <a target="blank" href="'.asset('upload/storing/'.$storing->foto).'"><img width="50px" src="'.asset('upload/storing/'.$storing->foto).'"></a> ';
           }
         })
         ->addColumn('foto_bon', function($storing){
           if($storing->foto_bon == NULL){
             return "no photo";
           } else {
-            return ' <img width="50px" src="'.asset('upload/storing/'.$storing->foto_bon).'"> ';
+            return ' <a target="blank" href="'.asset('upload/storing/'.$storing->foto_bon).'"><img width="50px" src="'.asset('upload/storing/'.$storing->foto_bon).'"></a> ';
           }
         })
         ->addColumn('aksi',function($storing) {
           return '<a onclick="editStoring('.$storing->id.')" class="btn btn-info btn-xs">Edit</a>'.' '.
           '<a onclick="deleteStoring('.$storing->id.')"class="btn btn-danger btn-xs">Delete</a>';
         })->escapeColumns([])->make(true);
+    }
+
+    public function export(){
+      $data = DB::table('storings')
+                ->leftjoin('kendaraans','storings.kendaraan','=','kendaraans.id')
+                ->leftjoin('mekaniks','storings.mekanik','=','mekaniks.id')
+                ->select('storings.tanggal','storings.jenis','storings.biaya','storings.biaya_mekanik','kendaraans.nopol','mekaniks.nama')
+                ->get();
+      $table = array_map( function($data){
+          return (array) $data;
+      },$data->toArray());
+      return Excel::create('Data Storing',function($excel) use ($table){
+        $excel->sheet('sheet1',function($sheet) use($table){
+          $sheet->fromArray($table);
+        });
+      })->download('xls');
+    }
+
+    public function import(Request $request){
+        if($request->hasFile('file')){
+            $path = $request->file('file')->getRealPath();
+            // echo $path;
+            $data = Excel::load($path, function($reader){})->get();
+            if (!empty($data) && $data->count()) {
+                foreach ($data as $key => $value) {
+                  $storing = new Storing();
+                  $storing->kendaraan = $value->kendaraan;
+                  $storing->tanggal = $value->tanggal;
+                  $storing->jenis = $value->jenis;
+                  $storing->biaya = $value->biaya;
+                  $storing->biaya_mekanik = $value->biaya_mekanik;
+                  $storing->mekanik = $value->mekanik;
+                  $storing->save();
+                }
+            } else {
+              $request->session()->flash('status', 'Something wrong with your file. Go back!');
+              return redirect('storing');
+            }
+        } else {
+          $request->session()->flash('status', 'Something wrong with your file. Go back!');
+          return redirect('storing');
+        }
+
+        return back();
     }
 }

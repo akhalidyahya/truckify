@@ -54,18 +54,20 @@
     	</div>
     </div>
     <!-- /.col-md-6 -->
-    <div class="col-md-6">
+
+    <!-- biaya -->
+    <!-- <div class="col-md-6">
       <div class="box">
     		<div class="box-header">
     			<h3 class="box-title">Biaya</h3>
-          <!-- alert success -->
+
           <div id="success2" class="alert alert-success hide" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
             Your action was <strong>Successful</strong>
           </div>
-          <!-- alert error -->
+
           <div id="error2" class="alert alert-danger hide" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -75,7 +77,7 @@
           <br><br>
     			<a href="#" class="btn btn-primary" onclick="tambahHarga()"><i class="fa fa-plus"></i> Tambah Biaya</a>
     		</div>
-    		<!-- /.box-header -->
+
     		<div class="box-body">
     			<table id="example2" class="table table-bordered table-striped">
     				<thead>
@@ -89,9 +91,9 @@
     				<tbody></tbody>
     			</table>
     		</div>
-    		<!-- /.box-body -->
+
     	</div>
-    </div>
+    </div> -->
     <!-- ./col-md-6 -->
   </div>
 </section>

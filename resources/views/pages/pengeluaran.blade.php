@@ -12,7 +12,7 @@
 	</ol>
 </section>
 <section class="content">
-	<div class="box">
+	<div class="box box-primary">
 		<div class="box-header">
 			<!-- <h3 class="box-title">List Data</h3> -->
       <!-- alert success -->
@@ -29,9 +29,25 @@
         </button>
         something went <strong>wrong!</strong>
       </div>
+      @if(Session::has('status'))
+      <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{ Session::get('status') }}
+      </div>
+      @endif
       <br>
 			<a id="myButton" href="#" class="btn btn-primary" onclick="tambahPengeluaran()"><i class="fa fa-plus"></i> Tambah Data</a>
-		</div>
+
+      <!-- Expot/Import Button -->
+      <div class="pull-right">
+        <a id="import-btn" href="#" class="btn btn-info"><i class="fa fa-upload"></i> Import</a>
+        <a href="{{route('pengeluaran.export')}}" class=" btn btn-info" style=""><i class="fa fa-download"></i> Export</a>
+      </div>
+      <!-- END Export/Import Button -->
+
+    </div>
 		<!-- /.box-header -->
 		<div class="box-body">
 			<table id="table" class="table table-bordered table-striped">
@@ -55,11 +71,35 @@
 		</div>
 		<!-- /.box-body -->
 	</div>
+  <div class="box box-danger">
+    <div class="box-header with-border">
+      <h3 class="box-title">Pengeluaran</h3><div id="contoh">{{$chart}}</div>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+      </div>
+    </div>
+    <div class="box-body">
+      <div class="chart">
+        <canvas id="barChart" style="height:450px"></canvas>
+      </div>
+    </div>
+    <!-- /.box-body -->
+  </div>
 </section>
 @include('form/formpengeluaran')
+@include('form/importpengeluaran')
+<!-- ChartJS -->
+<script src="{{asset('admin/bower_components/chart.js/Chart.js')}}"></script>
+<!-- FastClick -->
+<script src="{{asset('admin/bower_components/fastclick/lib/fastclick.js')}}"></script>
 <script src="{{asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <script>
+  $('#import-btn').click(function(){
+      $('#import-form').modal('show');
+      $('.modal-title').text('Import File From Excel');
+  });
   var t = $('#table').DataTable({
     'processing'  : true,
     'serverSide'  : true,
@@ -109,11 +149,13 @@
 
         $('#id').val(data['pengeluaran'].id);
         $('label[for=storing]').html('Storing tanggal '+data['pengeluaran'].tanggal);
-        $('#datepicker').val(data['pengeluaran'].tanggal);
+        $('#datepicker').val(data['tanggal_']);
+        $('#tanggal').val(data['tanggal_']);
         $('#ujskamadjaya').val(data['pengeluaran'].ujskamadjaya);
         $('#ujsdatascript').val(data['pengeluaran'].ujsdatascript);
         $('#ujssogood').val(data['pengeluaran'].ujssogood);
-        $('#storing').val(data['pengeluaran'].storing);
+        $('#storing').val(data['storing']);
+        $('#storing_').val(data['storing']);
         $('#lain').val(data['pengeluaran'].lain);
         $('#keterangan').val(data['pengeluaran'].keterangan);
         $('#pemasukan').val(data['pengeluaran'].pemasukan);
@@ -165,5 +207,57 @@
       }
     });
   });
+</script>
+<script>
+  var urlChart = "{{url('pengeluaran/chart')}}";
+  var dataPengeluaran = {{$chart}};
+  var areaChartData = {
+    labels  : ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    datasets: [
+      {
+        label               : 'Pengeluaran',
+        fillColor           : 'rgba(210, 214, 222, 1)',
+        strokeColor         : 'rgba(210, 214, 222, 1)',
+        pointColor          : 'rgba(210, 214, 222, 1)',
+        pointStrokeColor    : '#c1c7d1',
+        pointHighlightFill  : '#fff',
+        pointHighlightStroke: 'rgba(220,220,220,1)',
+        data                : dataPengeluaran//[65, 59, 80, 81, 56, 55, 40]
+      }
+    ]
+  }
+  var barChartCanvas = $('#barChart').get(0).getContext('2d');
+  var barChart = new Chart(barChartCanvas);
+  var barChartData = areaChartData;
+  var barChartOptions = {
+    //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+    scaleBeginAtZero        : true,
+    //Boolean - Whether grid lines are shown across the chart
+    scaleShowGridLines      : true,
+    //String - Colour of the grid lines
+    scaleGridLineColor      : 'rgba(0,0,0,.05)',
+    //Number - Width of the grid lines
+    scaleGridLineWidth      : 1,
+    //Boolean - Whether to show horizontal lines (except X axis)
+    scaleShowHorizontalLines: true,
+    //Boolean - Whether to show vertical lines (except Y axis)
+    scaleShowVerticalLines  : true,
+    //Boolean - If there is a stroke on each bar
+    barShowStroke           : true,
+    //Number - Pixel width of the bar stroke
+    barStrokeWidth          : 2,
+    //Number - Spacing between each of the X value sets
+    barValueSpacing         : 5,
+    //Number - Spacing between data sets within X values
+    barDatasetSpacing       : 1,
+    //String - A legend template
+    legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+    //Boolean - whether to make the chart responsive
+    responsive              : true,
+    maintainAspectRatio     : true
+  }
+
+  barChartOptions.datasetFill = false;
+  barChart.Bar(barChartData, barChartOptions);
 </script>
 @endsection

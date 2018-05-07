@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Excel;
 
 use App\Invoice;
 
@@ -118,5 +119,45 @@ class InvoiceController extends Controller
           return '<a onclick="editInvoice('.$invoice->id.')" class="btn btn-info btn-xs">Edit</a>'.' '.
           '<a onclick="deleteInvoice('.$invoice->id.')"class="btn btn-danger btn-xs">Delete</a>';
         })->escapeColumns([])->make(true);
+    }
+
+    public function export(){
+      $data = Invoice::select('no','nominal','tgl_invoice','tgl_tempo','tgl_do','tgl_bayar','logistik')->get();
+      return Excel::create('Data Invoice',function($excel) use ($data) {
+        $excel->sheet('mySheet',function($sheet)use($data){
+          $sheet->fromArray($data);
+        });
+      })->download('xls');
+    }
+
+    public function import(Request $request){
+        if($request->hasFile('file')){
+            $path = $request->file('file')->getRealPath();
+            // echo $path;
+            $data = Excel::load($path, function($reader){})->get();
+            if (!empty($data) && $data->count()) {
+                foreach ($data as $key => $value) {
+                  $invoice = new Invoice();
+                  $invoice->no = $value->no;
+                  $invoice->nominal = $value->nominal;
+                  $invoice->tgl_invoice = $value->tgl_invoice;
+                  $invoice->tgl_tempo = $value->tgl_tempo;
+                  $invoice->tgl_do = $value->tgl_do;
+                  $invoice->tgl_bayar = $value->tgl_bayar;
+                  $invoice->logistik = $value->logistik;
+                  $invoice->save();
+                }
+            } else {
+              $request->session()->flash('status', 'Something wrong with your file. Go back!');
+              // echo "x";
+              return redirect('invoice');
+            }
+        } else {
+          $request->session()->flash('status', 'Something wrong with your file. Go back!');
+          return redirect('invoice');
+          // echo "x";
+        }
+
+        return back();
     }
 }

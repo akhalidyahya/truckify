@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Excel;
 
 use App\Kamadjaya;
 use App\Kendaraan;
@@ -135,5 +136,52 @@ class KamadjayaController extends Controller
           return '<a onclick="editKamadjaya('.$Kamadjaya->id.')" class="btn btn-info btn-xs">Edit</a>'.' '.
           '<a onclick="deleteKamadjaya('.$Kamadjaya->id.')"class="btn btn-danger btn-xs">Delete</a>';
         })->escapeColumns([])->make(true);
+    }
+
+    public function export(){
+      $data = DB::table('kamadjayas')
+                ->leftjoin('kendaraans','kamadjayas.no_truck','=','kendaraans.id')
+                ->leftjoin('jenis_kendaraans','kamadjayas.tipe','=','jenis_kendaraans.id')
+                ->select('kamadjayas.tanggal','kendaraans.nopol','kamadjayas.no_do','jenis_kendaraans.jenis_kendaraan','kamadjayas.customer','kamadjayas.destinasi','kamadjayas.wilayah','kamadjayas.daerah','kamadjayas.qty','kamadjayas.total_do','kamadjayas.desc','kamadjayas.cost')
+                ->get();
+      $table = array_map( function($data){
+          return (array) $data;
+      },$data->toArray());
+      return Excel::create('Data Kamadjaya',function($excel) use ($table){
+        $excel->sheet('sheet1',function($sheet) use($table){
+          $sheet->fromArray($table);
+        });
+      })->download('xls');
+    }
+
+    public function import(Request $request){
+        if($request->hasFile('file')){
+            $path = $request->file('file')->getRealPath();
+            // echo $path;
+            $data = Excel::load($path, function($reader){})->get();
+            if (!empty($data) && $data->count()) {
+                foreach ($data as $key => $value) {
+                  $invoice = new Invoice();
+                  $invoice->no = $value->no;
+                  $invoice->nominal = $value->nominal;
+                  $invoice->tgl_invoice = $value->tgl_invoice;
+                  $invoice->tgl_tempo = $value->tgl_tempo;
+                  $invoice->tgl_do = $value->tgl_do;
+                  $invoice->tgl_bayar = $value->tgl_bayar;
+                  $invoice->logistik = $value->logistik;
+                  $invoice->save();
+                }
+            } else {
+              $request->session()->flash('status', 'Something wrong with your file. Go back!');
+              // echo "x";
+              return redirect('invoice');
+            }
+        } else {
+          $request->session()->flash('status', 'Something wrong with your file. Go back!');
+          return redirect('invoice');
+          // echo "x";
+        }
+
+        return back();
     }
 }

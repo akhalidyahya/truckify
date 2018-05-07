@@ -20,7 +20,11 @@ class UsersController extends Controller
         if($request->session()->has('login_status') != true) {
           return redirect('login');
         } else {
-         return view('pages/users');
+          if ($request->session()->get('role') != 'admin') {
+            return redirect('dashboard');
+          } else {
+            return view('pages/users');
+          }
         }
     }
 

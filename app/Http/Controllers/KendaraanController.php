@@ -136,7 +136,7 @@ class KendaraanController extends Controller
           if($kendaraan->foto == NULL){
             return "no photo";
           } else {
-            return ' <img width="50px" src="'.asset('upload/foto/'.$kendaraan->foto).'"> ';
+            return ' <a target="blank" href="'.asset('upload/foto/'.$kendaraan->foto).'"><img width="50px" src="'.asset('upload/foto/'.$kendaraan->foto).'"></a> ';
           }
         })
         ->addColumn('aksi',function($kendaraan) {
@@ -146,11 +146,43 @@ class KendaraanController extends Controller
     }
 
     public function export(){
-        $kendaraan = Kendaraan::select('nopol','stnk','tahun','merk','daerah','foto','kir','sipa','ibm','kiu')->get();
-        return Excel::download('Data Kendaraan',function($excel) use ($kendaraan) {
-          $excel->sheet('mySheet',function($sheet)use($kendaraan){
-            $sheet->fromArray($kendaraan);
-          });
-        })->download('xls');
+      $kendaraan = Kendaraan::select('nopol','stnk','tahun','merk','daerah','kir','sipa','ibm','kiu')->get();
+      return Excel::create('Data Kendaraan',function($excel) use ($kendaraan) {
+        $excel->sheet('mySheet',function($sheet)use($kendaraan){
+          $sheet->fromArray($kendaraan);
+        });
+      })->download('xls');
+    }
+
+    public function import(Request $request){
+        if($request->hasFile('file')){
+            $path = $request->file('file')->getRealPath();
+            // echo $path;
+            $data = Excel::load($path, function($reader){})->get();
+            if (!empty($data) && $data->count()) {
+                foreach ($data as $key => $value) {
+                  $kendaraan = new Kendaraan();
+                  $kendaraan->nopol = $value->nopol;
+                  $kendaraan->stnk = $value->stnk;
+                  $kendaraan->tahun = $value->tahun;
+                  $kendaraan->merk = $value->merk;
+                  $kendaraan->daerah = $value->daerah;
+                  // $kendaraan->foto = $value->foto;
+                  $kendaraan->kir = $value->kir;
+                  $kendaraan->sipa = $value->sipa;
+                  $kendaraan->ibm = $value->ibm;
+                  $kendaraan->kiu = $value->kiu;
+                  $kendaraan->save();
+                }
+            } else {
+              $request->session()->flash('status', 'Something wrong with your file. Go back!');
+              return redirect('kendaraan');
+            }
+        } else {
+          $request->session()->flash('status', 'Something wrong with your file. Go back!');
+          return redirect('kendaraan');
+        }
+
+        return back();
     }
 }

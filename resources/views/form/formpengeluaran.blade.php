@@ -20,7 +20,7 @@
                     <i class="fa fa-calendar"></i>
                   </div>
                   <input disabled name="tanggal" type="text" class="form-control pull-right" id="datepicker" value="<?php echo $date = Date('Y-m-d') ?>">
-                  <input type="hidden" name="tanggal" value="{{$date}}">
+                  <input id="tanggal" type="hidden" name="tanggal" value="{{$date}}">
                 </div>
               </div>
             </div>
@@ -46,7 +46,7 @@
               <label class="control-label col-sm-3" for="storing">Storing hari ini</label>
               <div class="col-sm-9">
                 <input disabled type="text" class="form-control" name="storing" id="storing" value="{{$storing}}">
-                <input type="hidden" name="storing" value="{{$storing}}">
+                <input type="hidden" name="storing" value="{{$storing}}" id="storing_">
               </div>
             </div>
             <div class="form-group">

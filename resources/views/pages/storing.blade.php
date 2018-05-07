@@ -29,8 +29,25 @@
         </button>
         something went <strong>wrong!</strong>
       </div>
+      @if(Session::has('status'))
+      <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{ Session::get('status') }}
+      </div>
+      @endif
       <br>
+
 			<a href="#" class="btn btn-primary" onclick="tambahStoring()"><i class="fa fa-plus"></i> Tambah Data</a>
+
+      <!-- Expot/Import Button -->
+      <div class="pull-right">
+        <a id="import-btn" href="#" class="btn btn-info"><i class="fa fa-upload"></i> Import</a>
+        <a href="{{route('storing.export')}}" class=" btn btn-info" style=""><i class="fa fa-download"></i> Export</a>
+      </div>
+      <!-- END Export/Import Button -->
+
 		</div>
 		<!-- /.box-header -->
 		<div class="box-body">
@@ -56,9 +73,15 @@
 	</div>
 </section>
 @include('form/formstoring')
+@include('form/importstoring')
 <script src="{{asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <script>
+  $('#import-btn').click(function(){
+      $('#import-form').modal('show');
+      $('.modal-title').text('Import File From Excel');
+  });
+
   var t = $('#table').DataTable({
     'processing'  : true,
     'serverSide'  : true,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Excel;
 
 use App\Pengeluaran;
 use App\Storing;
@@ -24,7 +25,14 @@ class PengeluaranController extends Controller
           $biaya = Storing::where('tanggal',Date('Y-m-d'))->sum('biaya');
           $biaya_mekanik = Storing::where('tanggal',Date('Y-m-d'))->sum('biaya_mekanik');
           $storing = $biaya + $biaya_mekanik;
-          return view('pages/pengeluaran',['storing'=>$storing]);
+
+          $chart = DB::table('pengeluarans')
+                    ->select(DB::raw('sum(total) as jumlah'))
+                    ->groupBy(DB::raw('month(tanggal)'))
+                    ->get()->toArray();
+          $chart = array_column($chart,'jumlah');
+
+          return view('pages/pengeluaran',['storing'=>$storing,'chart'=>json_encode($chart,JSON_NUMERIC_CHECK)]);
         }
     }
 
@@ -82,7 +90,7 @@ class PengeluaranController extends Controller
     {
       $pengeluaran = Pengeluaran::find($id);
       $storing = Storing::where('tanggal',$pengeluaran->tanggal)->sum('biaya') + Storing::where('tanggal',$pengeluaran->tanggal)->sum('biaya_mekanik');
-      return $data = ['pengeluaran'=>$pengeluaran,'storing'=>$storing,'tanggal_storing'=>$pengeluaran->tanggal,'action'=>'edit'];
+      return $data = ['pengeluaran'=>$pengeluaran,'storing'=>$storing,'tanggal_'=>$pengeluaran->tanggal,'action'=>'edit'];
     }
 
     /**
@@ -126,5 +134,54 @@ class PengeluaranController extends Controller
           return '<a onclick="editPengeluaran('.$pengeluaran->id.')" class="btn btn-info btn-xs">Edit</a>'.' '.
           '<a onclick="deletePengeluaran('.$pengeluaran->id.')"class="btn btn-danger btn-xs">Delete</a>';
         })->escapeColumns([])->make(true);
+    }
+
+    public function export(){
+      $pengeluaran = Pengeluaran::select('tanggal','ujskamadjaya','ujssogood','ujsdatascript','storing','lain','total','keterangan','pemasukan')->get();
+      return Excel::create('Data Pengeluaran',function($excel) use ($pengeluaran) {
+        $excel->sheet('mySheet',function($sheet)use($pengeluaran){
+          $sheet->fromArray($pengeluaran);
+        });
+      })->download('xls');
+    }
+
+    public function import(Request $request){
+        if($request->hasFile('file')){
+            $path = $request->file('file')->getRealPath();
+            // echo $path;
+            $data = Excel::load($path, function($reader){})->get();
+            if (!empty($data) && $data->count()) {
+                foreach ($data as $key => $value) {
+                  $pengeluaran = new Pengeluaran();
+                  $pengeluaran->tanggal = $value->tanggal;
+                  $pengeluaran->ujskamadjaya = $value->ujskamadjaya;
+                  $pengeluaran->ujsdatascript = $value->ujsdatascript;
+                  $pengeluaran->ujssogood = $value->ujssogood;
+                  $pengeluaran->storing = $value->storing;
+                  $pengeluaran->lain = $value->lain;
+                  $pengeluaran->total = $value->total;
+                  $pengeluaran->keterangan = $value->keterangan;
+                  $pengeluaran->pemasukan = $value->pemasukan;
+                  $pengeluaran->save();
+                }
+            } else {
+              $request->session()->flash('status', 'Something wrong with your file. Go back!');
+              return redirect('kendaraan');
+            }
+        } else {
+          $request->session()->flash('status', 'Something wrong with your file. Go back!');
+          return redirect('kendaraan');
+        }
+
+        return back();
+    }
+
+    public function chart(){
+        $chart = DB::table('pengeluarans')
+                  ->select(DB::raw('sum(total) as jumlah'))
+                  ->groupBy(DB::raw('month(tanggal)'))
+                  ->get();
+        return response()->json($chart);
+
     }
 }

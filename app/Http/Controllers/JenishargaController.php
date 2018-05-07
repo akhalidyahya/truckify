@@ -17,11 +17,15 @@ class JenishargaController extends Controller
      */
     public function index(request $request)
     {
-        if($request->session()->has('login_status') != true) {
-          return redirect('login');
+      if($request->session()->has('login_status') != true) {
+        return redirect('login');
+      } else {
+        if ($request->session()->get('role') != 'admin') {
+          return redirect('dashboard');
         } else {
           return view('pages/jenisharga');
         }
+      }
     }
 
     /**
