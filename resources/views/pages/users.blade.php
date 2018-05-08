@@ -15,7 +15,7 @@
 <section class="content">
 	<div class="row">
     <div class="col-md-6">
-      <div class="box">
+      <div class="box box-primary">
     		<div class="box-header">
     			<h3 class="box-title">Data Users</h3>
           <!-- alert success -->
@@ -55,7 +55,7 @@
     </div>
     <!-- /.col-md-6 -->
     <div class="col-md-6">
-      <div class="box">
+      <div class="box box-primary">
     		<div class="box-header">
     			<h3 class="box-title">Nama Mekanik</h3>
           <!-- alert success -->

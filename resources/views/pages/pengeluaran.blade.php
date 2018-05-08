@@ -73,14 +73,16 @@
 	</div>
   <div class="box box-danger">
     <div class="box-header with-border">
-      <h3 class="box-title">Pengeluaran</h3><div id="contoh">{{$chart}}</div>
+      <h3 class="box-title">Pengeluaran</h3>
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button onclick="refresh()" type="button" class="btn btn-box-tool" id="refresh"><i class="fa fa-refresh"></i>
         </button>
       </div>
     </div>
     <div class="box-body">
-      <div class="chart">
+      <div class="chart" id="chart">
         <canvas id="barChart" style="height:450px"></canvas>
       </div>
     </div>
@@ -211,18 +213,19 @@
 <script>
   var urlChart = "{{url('pengeluaran/chart')}}";
   var dataPengeluaran = {{$chart}};
+  var dataBulan = {!!$bulan!!};
   var areaChartData = {
-    labels  : ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    labels  : dataBulan,
     datasets: [
       {
         label               : 'Pengeluaran',
-        fillColor           : 'rgba(210, 214, 222, 1)',
-        strokeColor         : 'rgba(210, 214, 222, 1)',
+        fillColor           : '#dd4b39',
+        strokeColor         : false,
         pointColor          : 'rgba(210, 214, 222, 1)',
         pointStrokeColor    : '#c1c7d1',
         pointHighlightFill  : '#fff',
         pointHighlightStroke: 'rgba(220,220,220,1)',
-        data                : dataPengeluaran//[65, 59, 80, 81, 56, 55, 40]
+        data                : dataPengeluaran
       }
     ]
   }
@@ -259,5 +262,8 @@
 
   barChartOptions.datasetFill = false;
   barChart.Bar(barChartData, barChartOptions);
+  function refresh(){
+    barChart.Bar(barChartData, barChartOptions);
+  }
 </script>
 @endsection

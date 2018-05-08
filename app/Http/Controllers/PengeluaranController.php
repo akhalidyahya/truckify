@@ -26,13 +26,19 @@ class PengeluaranController extends Controller
           $biaya_mekanik = Storing::where('tanggal',Date('Y-m-d'))->sum('biaya_mekanik');
           $storing = $biaya + $biaya_mekanik;
 
+          $bulan = DB::table('pengeluarans')
+                    ->select(DB::raw('distinct(monthname(tanggal)) as bulan'))
+                    ->orderBy(DB::raw('month(tanggal)'))
+                    ->get()->toArray();
+          $bulan = array_column($bulan,'bulan');
+
           $chart = DB::table('pengeluarans')
                     ->select(DB::raw('sum(total) as jumlah'))
                     ->groupBy(DB::raw('month(tanggal)'))
                     ->get()->toArray();
           $chart = array_column($chart,'jumlah');
 
-          return view('pages/pengeluaran',['storing'=>$storing,'chart'=>json_encode($chart,JSON_NUMERIC_CHECK)]);
+          return view('pages/pengeluaran',['storing'=>$storing,'chart'=>json_encode($chart,JSON_NUMERIC_CHECK),'bulan'=>json_encode($bulan,JSON_NUMERIC_CHECK)]);
         }
     }
 
@@ -174,14 +180,5 @@ class PengeluaranController extends Controller
         }
 
         return back();
-    }
-
-    public function chart(){
-        $chart = DB::table('pengeluarans')
-                  ->select(DB::raw('sum(total) as jumlah'))
-                  ->groupBy(DB::raw('month(tanggal)'))
-                  ->get();
-        return response()->json($chart);
-
     }
 }

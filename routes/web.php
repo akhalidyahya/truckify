@@ -37,9 +37,6 @@ Route::post('datascript/import','DataScriptConttroller@import')->name('datascrip
 Route::get('sogood/export','SogoodController@export')->name('sogood.export');
 Route::post('sogood/import','SogoodController@import')->name('sogood.import');
 
-//Chart
-Route::get('pengeluaran/chart','PengeluaranController@chart')->name('pengeluaran.chart');
-
 Route::resource('kendaraan','KendaraanController', ['names' => [
     'index' => 'kendaraan',
     'import' =>'import'
