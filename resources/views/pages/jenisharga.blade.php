@@ -17,7 +17,7 @@
     <div class="col-md-6">
       <div class="box box-primary">
     		<div class="box-header">
-    			<h3 class="box-title">Jenis Kendaraan</h3>
+    			<h3 class="box-title">Harga</h3>
           <!-- alert success -->
           <div id="success" class="alert alert-success hide" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -33,14 +33,14 @@
             something went <strong>wrong!</strong>
           </div>
           <br><br>
-    			<a href="#" class="btn btn-primary" onclick="tambahJenis()"><i class="fa fa-plus"></i> Tambah Jenis</a>
+    			<a href="#" class="btn btn-primary" onclick="tambahJenis()"><i class="fa fa-plus"></i> Tambah Harga</a>
     		</div>
     		<!-- /.box-header -->
     		<div class="box-body">
     			<table id="example" class="table table-bordered table-striped">
     				<thead>
     					<tr>
-    						<th>Id</th>
+    						<!-- <th>Id</th> -->
     						<th>jenis</th>
     						<th>daerah</th>
                 <th>harga</th>
@@ -56,10 +56,10 @@
     <!-- /.col-md-6 -->
 
     <!-- biaya -->
-    <!-- <div class="col-md-6">
-      <div class="box">
+    <div class="col-md-6">
+      <div class="box box-primary">
     		<div class="box-header">
-    			<h3 class="box-title">Biaya</h3>
+    			<h3 class="box-title">Jenis Kendaraan</h3>
 
           <div id="success2" class="alert alert-success hide" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -75,16 +75,14 @@
             something went <strong>wrong!</strong>
           </div>
           <br><br>
-    			<a href="#" class="btn btn-primary" onclick="tambahHarga()"><i class="fa fa-plus"></i> Tambah Biaya</a>
+    			<a href="#" class="btn btn-primary" onclick="tambahHarga()"><i class="fa fa-plus"></i> Tambah Jenis</a>
     		</div>
 
     		<div class="box-body">
     			<table id="example2" class="table table-bordered table-striped">
     				<thead>
     					<tr>
-    						<th>Id</th>
     						<th>daerah</th>
-                <th>harga</th>
                 <th>aksi</th>
     					</tr>
     				</thead>
@@ -93,7 +91,7 @@
     		</div>
 
     	</div>
-    </div> -->
+    </div>
     <!-- ./col-md-6 -->
   </div>
 </section>
@@ -110,7 +108,7 @@
     'paging'      : true,
     'lengthChange': false,
     'columns'     : [
-      {data:'id', name: 'id'},
+      // {data:'id', name: 'id'},
       {data:'jenis_kendaraan', name: 'jenis_kendaraan'},
       {data:'daerah', name: 'daerah'},
       {data: 'harga', name: 'harga'},
@@ -200,9 +198,7 @@
     'paging'      : true,
     'lengthChange': false,
     'columns'     : [
-      {data:'id', name: 'id'},
       {data:'daerah', name: 'daerah'},
-      {data:'harga', name: 'harga'},
       {data:'aksi', name: 'aksi', orderable: false, searchable: false},
     ],
     'info'        : true,
@@ -252,7 +248,6 @@
         $('.modal-title').text('Edit data mekanik');
 
         $('#id2').val(data.id);
-        $('#harga2').val(data.harga);
         $('#daerah2').val(data.daerah);
       },
       error: function(){

@@ -13,20 +13,25 @@
             {{csrf_field()}} {{method_field('POST')}}
             <input type="hidden" name="id" id="id">
             <div class="form-group">
-              <label class="control-label col-sm-2" for="jenis_kendaraan">Jenis Kendaraan</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" name="jenis_kendaraan" id="jenis_kendaraan" placeholder="Masukan jenis kendaraan">
+              <label class="control-label col-sm-3" for="jenis_kendaraan">Jenis Kendaraan</label>
+              <div class="col-sm-9">
+                <select class="form-control" name="jenis_kendaraan" id="jenis_kendaraan">
+                  <option value="">--Pilih--</option>
+                  @foreach($jenis as $data)
+                  <option value="{{$data->daerah}}">{{$data->daerah}}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-sm-2" for="daerah">Daerah</label>
-              <div class="col-sm-10">
+              <label class="control-label col-sm-3" for="daerah">Daerah</label>
+              <div class="col-sm-9">
                 <input type="text" class="form-control" name="daerah" id="daerah" placeholder="Masukan Daerah">
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-sm-2" for="harga">Harga</label>
-              <div class="col-sm-10">
+              <label class="control-label col-sm-3" for="harga">Harga</label>
+              <div class="col-sm-9">
                 <input type="text" class="form-control" name="harga" id="harga" placeholder="Masukan harga">
               </div>
             </div>
@@ -59,15 +64,9 @@
               {{csrf_field()}} {{method_field('POST')}}
               <input type="hidden" name="id2" id="id2">
               <div class="form-group">
-                <label class="control-label col-sm-2" for="daerah2">Daerah</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" name="daerah2" id="daerah2" placeholder="Masukan Daerah">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="harga2">Harga</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" name="harga2" id="harga2" placeholder="Masukan Harga">
+                <label class="control-label col-sm-4" for="daerah2">Jenis Kendaraan</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" name="daerah2" id="daerah2" placeholder="Masukan Jenis Kendaraan">
                 </div>
               </div>
               <div class="text-center">

@@ -24,8 +24,15 @@ class DataScriptConttroller extends Controller
             return redirect('login');
         } else {
             $kendaraan = Kendaraan::all();
-            $jenis = JenisKendaraan::all();
-            return view('pages/datascript',['kendaraan'=>$kendaraan,'jenis'=>$jenis]);
+            $jenis = DB::table('jenis_kendaraans')
+                        ->select('jenis_kendaraan')
+                        ->groupBy('jenis_kendaraan')
+                        ->get();
+            $daerah = DB::table('jenis_kendaraans')
+                        ->select('daerah')
+                        ->groupBy('daerah')
+                        ->get();
+            return view('pages/datascript',['kendaraan'=>$kendaraan,'jenis'=>$jenis,'daerah'=>$daerah]);
         }
 
     }
@@ -177,5 +184,13 @@ class DataScriptConttroller extends Controller
         }
 
         return back();
+    }
+
+    public function harga($param_jenis, $param_daerah) {
+      $jenis = $param_jenis;
+      $daerah = $param_daerah;
+      return DB::table('jenis_kendaraans')
+                ->where('jenis_kendaraan','=',$jenis)
+                ->where('daerah','=',$daerah)->get();
     }
 }

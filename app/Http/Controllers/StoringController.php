@@ -24,8 +24,7 @@ class StoringController extends Controller
           return redirect('login');
         } else {
           $kendaraan = Kendaraan::all();
-          $mekanik = Mekanik::all();
-          return view('pages/storing',['kendaraan'=>$kendaraan,'mekanik'=>$mekanik]);
+          return view('pages/storing',['kendaraan'=>$kendaraan]);
         }
     }
 

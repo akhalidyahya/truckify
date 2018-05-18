@@ -35,6 +35,11 @@ class DashboardController extends Controller
                    ->limit(5)
                    ->orderBy('id','desc')
                    ->get();
+        $pengeluaran_data = DB::table('pengeluarans')
+                            ->select('tanggal','total')
+                            ->limit(5)
+                            ->orderBy('tanggal','desc')
+                            ->get();
 
          return view('pages/dashboard',[
              'pengeluaranToday'=>$pengeluaranToday,
@@ -44,7 +49,8 @@ class DashboardController extends Controller
              'kamadjaya'=>$kamadjaya,
              'datascript'=>$datascript,
              'sogood'=>$sogood,
-             'storing'=>$storing
+             'storing'=>$storing,
+             'pengeluaran_data'=>$pengeluaran_data
          ]);
        }
     }

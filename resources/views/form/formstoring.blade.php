@@ -55,12 +55,7 @@
             <div class="form-group">
               <label class="control-label col-sm-2" for="nopol">Mekanik</label>
               <div class="col-sm-10">
-                <select class="form-control" name="mekanik" id="mekanik">
-                  <option value="">--pilih mekanik--</option>
-                  @foreach($mekanik as $data)
-                  <option value="{{$data->id}}">{{$data->nama}}</option>
-                  @endforeach
-                </select>
+                <input type="text" class="form-control" name="mekanik" id="mekanik" placeholder="masukan nama mekanik">
               </div>
             </div>
             <div class="form-group">

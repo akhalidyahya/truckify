@@ -220,7 +220,7 @@
       {
         label               : 'Pengeluaran',
         fillColor           : '#dd4b39',
-        strokeColor         : false,
+        strokeColor         : null,
         pointColor          : 'rgba(210, 214, 222, 1)',
         pointStrokeColor    : '#c1c7d1',
         pointHighlightFill  : '#fff',

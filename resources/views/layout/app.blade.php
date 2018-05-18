@@ -138,7 +138,7 @@
         <ul class="treeview-menu">
           <li class="{{ (\Request::route()->getName() == 'kamadjaya') ? 'active' : ''}}"><a href="{{url('kamadjaya')}}"><i class="fa fa-circle-o"></i> Kamadjaya</a></li>
           <li class="{{ (\Request::route()->getName() == 'datascript') ? 'active' : ''}}"><a href="{{url('datascript')}}"><i class="fa fa-circle-o"></i> Data Script</a></li>
-          <li class="{{ (\Request::route()->getName() == 'sogood') ? 'active' : ''}}"><a href="{{url('sogood')}}"><i class="fa fa-circle-o"></i> So Good</a></li>
+          <!-- <li class="{{ (\Request::route()->getName() == 'sogood') ? 'active' : ''}}"><a href="{{url('sogood')}}"><i class="fa fa-circle-o"></i> So Good</a></li> -->
         </ul>
       </li>
       <li class="{{ (\Request::route()->getName() == 'pengeluaran') ? 'active' : ''}}">
@@ -146,9 +146,19 @@
           <i class="fa fa-money"></i> <span>Pengeluaran</span>
         </a>
       </li>
+      <li class="{{ (\Request::route()->getName() == 'pemasukan') ? 'active' : ''}}">
+        <a href="{{url('pemasukan')}}">
+          <i class="fa fa-usd"></i> <span>Pemasukan</span>
+        </a>
+      </li>
       <li class="{{ (\Request::route()->getName() == 'invoice') ? 'active' : ''}}">
         <a href="{{url('invoice')}}">
           <i class="fa fa-file-o"></i> <span>Invoice</span>
+        </a>
+      </li>
+      <li class="">
+        <a href="http://16.pelacakan.net/index.php" target="_blank">
+          <i class="fa fa-location-arrow"></i> <span>Pelacakan</span>
         </a>
       </li>
       @if(Session::get('role') == 'admin')
@@ -160,7 +170,7 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li class="{{ (\Request::route()->getName() == 'users') ? 'active' : ''}}"><a href="{{url('users')}}"><i class="fa fa-circle-o"></i> Users dan Mekanik</a></li>
+          <li class="{{ (\Request::route()->getName() == 'users') ? 'active' : ''}}"><a href="{{url('users')}}"><i class="fa fa-circle-o"></i> Users</a></li>
           <li class="{{ (\Request::route()->getName() == 'jenis') ? 'active' : ''}}"><a href="{{url('jenis')}}"><i class="fa fa-circle-o"></i> Jenis kendaraan & Harga</a></li>
           <li><a href="#"><i class="fa fa-circle-o"></i> Others</a></li>
         </ul>

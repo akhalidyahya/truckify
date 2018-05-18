@@ -29,7 +29,7 @@
                 <select class="form-control" name="jenis" id="jenis">
                   <option value="">--pilih kendaraan--</option>
                   @foreach($jenis as $data)
-                  <option value="{{$data->id}}">{{$data->jenis_kendaraan}}</option>
+                  <option value="{{$data->jenis_kendaraan}}">{{$data->jenis_kendaraan}}</option>
                   @endforeach
                 </select>
               </div>
@@ -66,7 +66,12 @@
             <div class="form-group">
               <label class="control-label col-sm-3" for="daerah">daerah</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" name="daerah" id="daerah" placeholder="Masukan daerah">
+                <select class="form-control" name="daerah" id="daerah">
+                  <option value="">--pilih daerah--</option>
+                  @foreach($daerah as $data)
+                  <option value="{{$data->daerah}}">{{$data->daerah}}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
             <div class="form-group">
@@ -78,7 +83,9 @@
             <div class="form-group">
               <label class="control-label col-sm-3" for="cost">Delivery Cost</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" name="cost" id="cost" placeholder="Masukan total delivery cost">
+                <!-- <button type="button" name="button" id="hitung">hitung</button> -->
+                <b><label class="control-label" id="cost2"></label></b>
+                <input type="hidden" class="form-control" name="cost" id="cost" placeholder="Masukan total delivery cost">
               </div>
             </div>
             <div class="text-center">
@@ -93,3 +100,29 @@
 
     </div>
   </div>
+<script type="text/javascript">
+$('#jenis,#daerah').change(function(event){
+  event.preventDefault();
+  var param = $('#jenis').val();
+  var param2 = $('#daerah').val();
+  var url = "{{url('datascript/jenis')}}"+"/"+param+"/daerah"+"/"+param2;
+
+  $.ajax({
+    url: url,
+    type: "GET",
+    dataType: "JSON",
+    success: function(data) {
+      if (data[0] == null) {
+        $('#cost').val('harga tidak ditemukan!');
+        $('#cost2').text('harga tidak ditemukan!');
+      }
+      $('#cost').val(data[0].harga);
+      $('#cost2').text(data[0].harga);
+    },
+    error: function(){
+      $('#cost').val('harga tidak ditemukan!');
+      $('#cost2').text('harga tidak ditemukan!');
+    }
+  });
+});
+</script>

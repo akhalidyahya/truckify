@@ -54,6 +54,7 @@
 			<table id="example2" class="table table-bordered table-striped">
 				<thead>
 					<tr>
+            <th>Status</th>
 						<th>no Invoice</th>
 						<th>Nominal</th>
 						<th>tanggal Invoice</th>
@@ -87,6 +88,7 @@
       'paging'      : true,
       'lengthChange': true,
       'columns'     : [
+        {data:'status_bayar', name:'status_bayar'},
         {data:'no', name: 'no'},
         {data:'nominal', name: 'nominal'},
         {data:'tgl_invoice', name: 'tgl_invoice'},
@@ -105,6 +107,7 @@
       $('input[name=_method]').val('POST');
       $('#myModal').modal('show');
       $('#myModal form')[0].reset();
+      $('#status').attr('disabled');
       $('.modal-title').text('Tambah data Invoice');
     }
 
@@ -129,6 +132,7 @@
           $('#tgl_do').val(data.tgl_do);
           $('#tgl_bayar').val(data.tgl_bayar);
           $('#logistik').val(data.logistik);
+          $('#status').val(data.status);
         },
         error: function(){
           alert("something went wrong!");

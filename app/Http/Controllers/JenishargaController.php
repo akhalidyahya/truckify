@@ -23,7 +23,8 @@ class JenishargaController extends Controller
         if ($request->session()->get('role') != 'admin') {
           return redirect('dashboard');
         } else {
-          return view('pages/jenisharga');
+          $jenis = Harga::all();
+          return view('pages/jenisharga',['jenis'=>$jenis]);
         }
       }
     }
@@ -58,8 +59,7 @@ class JenishargaController extends Controller
     public function save(Request $request)
     {
       $data = [
-        'daerah' => $request['daerah2'],
-        'harga' => $request['harga2']
+        'daerah' => $request['daerah2']
       ];
 
       Harga::create($data);
@@ -114,7 +114,6 @@ class JenishargaController extends Controller
     {
         $harga = Harga::find($id);
         $harga->daerah = $request['daerah2'];
-        $harga->harga = $request['harga2'];
         $harga->update();
     }
 

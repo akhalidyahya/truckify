@@ -75,7 +75,15 @@
                   <option value="">--pilih logistik--</option>
                   <option value="Kamadjaya">Kamadjaya</option>
                   <option value="Data Script">Data Script</option>
-                  <option value="So Good">So Good</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="status">Status bayar</label>
+              <div class="col-sm-10">
+                <select class="form-control" name="status" id="status">
+                  <option value="belum">Belum</option>
+                  <option value="sudah">Sudah</option>
                 </select>
               </div>
             </div>

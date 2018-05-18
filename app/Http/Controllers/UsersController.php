@@ -106,7 +106,11 @@ class UsersController extends Controller
       $admin = Admin::find($id);
       $admin->nama = $request['nama'];
       $admin->username = $request['username'];
-      $admin->password = md5($request['password']);
+      if ($request['password'] != '') {
+        $admin->password = md5($request['password']);
+      } else {
+        $admin->password = $admin->password;
+      }
       $admin->role = $request['role'];
       $admin->update();
     }

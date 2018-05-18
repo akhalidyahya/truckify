@@ -67,11 +67,11 @@
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-briefcase"></i></span>
+            <span class="info-box-icon bg-green"><i class="ion ion-social-usd"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Delivery Cost <br>Kamadjaya <b>Bulan</b> Ini</span>
-              <span class="info-box-number">Rp. {{$kamadjaya}}</span>
+              <span class="info-box-text">Pemasukan <b>hari</b> Ini</span>
+              <span class="info-box-number">Rp. </span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -80,11 +80,11 @@
         <!-- /.col -->
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-briefcase"></i></span>
+            <span class="info-box-icon bg-green"><i class="ion ion-social-usd"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Delivery Cost <br>Datascript <b>Bulan</b> Ini</span>
-              <span class="info-box-number">Rp. {{$datascript}}</span>
+              <span class="info-box-text">Pemasukan <b>Bulan</b> Ini</span>
+              <span class="info-box-number">Rp. </span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -97,11 +97,11 @@
 
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="icon ion-briefcase"></i></span>
+            <span class="info-box-icon bg-aqua"><i class="icon ion-briefcase"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Delivery Cost <br>So Good <b>Bulan</b> Ini</span>
-              <span class="info-box-number">Rp. {{$sogood}}</span>
+              <span class="info-box-text">Jumlah Invoice</span>
+              <span class="info-box-number">0</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -160,11 +160,10 @@
           </div>
           <!-- /.box -->
         </div>
-        <!-- /.col-sm-6 -->
         <div class="col-sm-6">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Title</h3>
+          <div class="box box-primary">
+            <div class="box-header with-border ">
+              <h3 class="box-title">Pengeluaran</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -173,17 +172,37 @@
               </div>
             </div>
             <div class="box-body">
-              Start creating your amazing application!
+              <ul class="nav nav-stacked">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>no</th>
+                      <th>Tanggal</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $no = 1; ?>
+                    @foreach($pengeluaran_data as $data)
+                    <tr>
+                      <td>{{$no}}</td>
+                      <td>{{$data->tanggal}}</td>
+                      <td>Rp. {{$data->total}}</td>
+                    </tr>
+                    <?php $no++; ?>
+                    @endforeach
+                  </tbody>
+                </table>
+              </ul>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-              Footer
+              <a href="{{url('pengeluaran')}}">Lihat Selengkapnya</a>
             </div>
             <!-- /.box-footer-->
           </div>
           <!-- /.box -->
         </div>
-        <!-- /.col-sm-6 -->
       </div>
       <!-- /.row -->
     </section>

@@ -50,7 +50,8 @@ class InvoiceController extends Controller
         'tgl_tempo' => $request['tgl_tempo'],
         'tgl_do' => $request['tgl_do'],
         'tgl_bayar' => $request['tgl_bayar'],
-        'logistik' => $request['logistik']
+        'logistik' => $request['logistik'],
+        'status' => $request['status']
       ];
 
       Invoice::create($data);
@@ -96,6 +97,7 @@ class InvoiceController extends Controller
         $invoice->tgl_do = $request['tgl_do'];
         $invoice->tgl_bayar = $request['tgl_bayar'];
         $invoice->logistik = $request['logistik'];
+        $invoice->status = $request['status'];
 
         $invoice->update();
     }
@@ -115,6 +117,14 @@ class InvoiceController extends Controller
       $invoice = Invoice::all();
 
       return DataTables::of($invoice)
+        ->addColumn('status_bayar',function($invoice) {
+          if ($invoice->status == 'sudah') {
+            $class = 'label-success';
+          } else {
+            $class = 'label-danger';
+          }
+          return '<span class="label '.$class.'">'.$invoice->status.'</span>';
+        })
         ->addColumn('aksi',function($invoice) {
           return '<a onclick="editInvoice('.$invoice->id.')" class="btn btn-info btn-xs">Edit</a>'.' '.
           '<a onclick="deleteInvoice('.$invoice->id.')"class="btn btn-danger btn-xs">Delete</a>';

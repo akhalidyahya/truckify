@@ -97,9 +97,10 @@ Route::resource('datascript','DataScriptConttroller',['names' => [
   ]
 ]);
 Route::get('api/datascript','DataScriptConttroller@apidatascript')->name('api.datascript');
+Route::get('datascript/jenis/{jenis}/daerah/{daerah?}','DataScriptConttroller@harga')->name('harga.datascript');
 
-Route::resource('sogood','SogoodController',['names' => [
-    'index' => 'sogood'
-  ]
-]);
-Route::get('api/sogood','SogoodController@apisogood')->name('api.sogood');
+// Route::resource('sogood','SogoodController',['names' => [
+//     'index' => 'sogood'
+//   ]
+// ]);
+// Route::get('api/sogood','SogoodController@apisogood')->name('api.sogood');
